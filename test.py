@@ -10,7 +10,7 @@ from subprocess import call
 from slackclient import SlackClient
 
 # Slack Notifier Stuff
-bot_slack_token = "xoxb-412355015472-535475665268-qkFNYWekgkx5b0IO62tofYaO"
+bot_slack_token = "xoxp-412355015472-414388753782-544295912980-94afe861f0e860493a8ebd84bfef5023"
 
 slack = SlackClient(bot_slack_token)
 thread = slack.api_call(
@@ -41,17 +41,12 @@ def main():
     else:
         url = "http://speedtest.wdc01.softlayer.com/downloads/test10.zip"
     directory = "."
-
     time_elapsed = downloadFile(url, directory)
     call(f"rm -f test100.zip", shell=True)
     speed = 11.5 / time_elapsed
+    slack.api_call("chat.postMessage", channel="CFCCHRH0F", thread_ts=thread["ts"], text=f"{speed}")
 
-    slack.api_call(
-        "chat.postMessage",
-        channel="CFCCHRH0F",
-        thread_ts=thread["ts"],
-        text=f"{speed}",
-    )
+
 
 
 if __name__ == "__main__":
